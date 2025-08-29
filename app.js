@@ -89,7 +89,7 @@ app.delete("/vehiculos/:id", async (req, res) => {
       return res.status(404).json({succes: false,message: 'Error, vehiculo no encontrado'});
     }
 
-    res.status(200).json({succes: true, message: "Vehículo eliminado"});
+    res.status(200).json({succes: true, message: "Vehículo eliminado correctamente"});
   } catch (error) {
     handDbError(res, error);
   }
