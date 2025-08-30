@@ -15,12 +15,29 @@ const handDbError = (res, error) => {
 //GET(Consulta)
 app.get('/vehiculos', async (req, res) => {
   try {
-    const rows = await pool.query('SELECT * FROM vehiculos');
+    const [rows] = await pool.query('SELECT * FROM vehiculos'); 
     res.status(200).json(rows);
   } catch (error) {
     handDbError(res, error);
   }
 });
+
+//GET (Consulta por placa)
+app.get('/vehiculos/placa/:placa', async (req, res) => {
+  const {placa} = req.params;
+  try {
+    const [rows] = await pool.query('SELECT * FROM vehiculos WHERE placa = ?', [placa]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Vehículo no encontrado' });
+    }
+    res.status(200).json(rows[0]);
+  } catch (error) {
+    handDbError(res, error);
+  }
+});
+
+// ...existing code...
+
 
 //POST(Insertar)
 app.post('/vehiculos', async (req, res) => {
