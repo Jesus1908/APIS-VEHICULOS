@@ -36,8 +36,6 @@ app.get('/vehiculos/placa/:placa', async (req, res) => {
   }
 });
 
-// ...existing code...
-
 
 //POST(Insertar)
 app.post('/vehiculos', async (req, res) => {
