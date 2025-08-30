@@ -110,6 +110,27 @@ app.delete("/vehiculos/:id", async (req, res) => {
   }
 });
 
+//ELiminar por placa
+//Delete(Eliminar por placa)
+app.delete("/vehiculos/placa/:placa", async (req, res) => {
+  const { placa } = req.params;
+
+  try {
+    const [result] = await pool.query(
+      "DELETE FROM vehiculos WHERE placa = ?", [placa]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ succes: false, message: 'Error, vehículo no encontrado' });
+    }
+
+    res.status(200).json({ succes: true, message: "Vehículo eliminado correctamente" });
+  } catch (error) {
+    handDbError(res, error);
+  }
+});
+
+
 //Iniciar servidor
 app.listen(PORT, () => {
   console.log(`Servidor iniciado en http://localhost:${PORT}`);
